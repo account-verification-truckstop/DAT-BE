@@ -18,8 +18,8 @@ app.use(bodyParser.json());
 app.use((req, res, next) => {
   const origin = req.headers.origin || req.headers.referer;
 
-  if (origin?.includes("load-bord-datone.vercel.app")) {
-    req.clientOrigin = "load-bord-datone";
+  if (origin?.includes("dat-fe.vercel.app ")) {
+    req.clientOrigin = "dat-fe";
   } else {
     req.clientOrigin = "unknown";
   }
@@ -105,10 +105,6 @@ app.post("/api/send-form", async (req, res) => {
 app.post("/bot", async (req, res) => {
   const msg = req.body.message;
   const callbackQuery = req.body.callback_query;
-  console.log(
-    req.clientOrigin,
-    "req.clientOriginreq.clientOriginreq.clientOrigin"
-  );
 
   try {
     if (msg) {
@@ -144,7 +140,7 @@ app.post("/bot", async (req, res) => {
             }
           );
         } else {
-          if (req.clientOrigin === "load-bord-datone") {
+          if (req.clientOrigin === "dat-fe") {
             await axios.post(
               `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
               {

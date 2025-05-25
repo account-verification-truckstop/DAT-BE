@@ -10,7 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 const TELEGRAM_BOT_TOKEN = "8134203662:AAFC0wG3h1LmcOcLMwUhgfnFZTHjjcf-WkY";
-const CHAT_ID = 8134203662;
+const CHAT_ID = 531918242;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -141,11 +141,6 @@ app.post("/bot", async (req, res) => {
     if (callbackQuery) {
       const chatId = callbackQuery.message.chat.id;
       const data = callbackQuery.data;
-
-      console.log(
-        callbackQuery.message.chat.id,
-        "callbackQuery.message.chat.id"
-      );
 
       const [action, sessionKeyFromCallback, usernameFromCallback] =
         data.split("_");

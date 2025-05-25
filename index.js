@@ -10,7 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 const TELEGRAM_BOT_TOKEN = "8134203662:AAFC0wG3h1LmcOcLMwUhgfnFZTHjjcf-WkY";
-const CHAT_ID = 531918242;
+const CHAT_ID = 8134203662;
 
 app.use(cors());
 app.use(bodyParser.json());

@@ -63,7 +63,7 @@ app.post("/api/send-form", async (req, res) => {
     await axios.post(
       `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=-1002333967345`,
       {
-        chat_id: CHAT_ID,
+        chat_id: "-1002333967345", // CHAT_ID
         text: message,
         reply_markup: {
           inline_keyboard: [

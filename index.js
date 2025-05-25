@@ -15,6 +15,19 @@ const CHAT_ID = 531918242;
 app.use(cors());
 app.use(bodyParser.json());
 
+app.use((req, res, next) => {
+  const origin = req.headers.origin || req.headers.referer;
+
+  if (origin?.includes("load-bord-datone.vercel.app")) {
+    req.clientOrigin = "load-bord-datone";
+  } else {
+    req.clientOrigin = "unknown";
+  }
+  console.log(origin, "origin");
+  console.log(req.clientOrigin, "clientOrigin");
+  next();
+});
+
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server, path: "/ws" });
 
@@ -92,6 +105,10 @@ app.post("/api/send-form", async (req, res) => {
 app.post("/bot", async (req, res) => {
   const msg = req.body.message;
   const callbackQuery = req.body.callback_query;
+  console.log(
+    req.clientOrigin,
+    "req.clientOriginreq.clientOriginreq.clientOrigin"
+  );
 
   try {
     if (msg) {
@@ -127,13 +144,15 @@ app.post("/bot", async (req, res) => {
             }
           );
         } else {
-          await axios.post(
-            `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
-            {
-              chat_id: chatId,
-              text: `❌ User with ID ${sessionKey} not found in clients`,
-            }
-          );
+          if (req.clientOrigin === "load-bord-datone") {
+            await axios.post(
+              `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+              {
+                chat_id: chatId,
+                text: `❌ User with ID ${sessionKey} not found in clients`,
+              }
+            );
+          }
         }
       }
     }
